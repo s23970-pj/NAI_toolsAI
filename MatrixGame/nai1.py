@@ -1,18 +1,20 @@
 from random import randint
 
+"""
+  Autorzy: Adrian Goik, Łukasz Soldatke
+  
+  Zasady: Gra turowa o sumie zerowej polegająca na wyświetleniu planszy w postaci macierzy 5x5,
+  której pola posiadają losowe wartości od -10 do 10. Wartości z wybranych pól są dodawane do punktów gracza
+  i odejmowane od punktów przeciwnika. Gra kończy się po zajęciu wszystkich pól, a wygrywa gracz z większą liczbą
+  punktów.
+
+  -komentarze, dokumentacja
+  """
 from easyAI import TwoPlayerGame, Human_Player, AI_Player, Negamax
 
 
 class PointGame(TwoPlayerGame):
-    """
-    Autorzy: Adrian Goik, Łukasz Soldatke
-    Zasady: Gra turowa o sumie zerowej polegająca na wyświetleniu planszy w postaci macierzy 5x5,
-    której pola posiadają losowe wartości od -10 do 10. Wartości z wybranych pól są dodawane do punktów gracza
-    i odejmowane od punktów przeciwnika. Gra kończy się po zajęciu wszystkich pól, a wygrywa gracz z większą liczbą
-    punktów.
 
-    -komentarze, dokumentacja
-    """
 
     def __init__(self, players=None):
         """

@@ -12,6 +12,7 @@ i odejmowane od punktów przeciwnika. Gra kończy się po zajęciu wszystkich p�
 from easyAI import AI
 import random
 
+
 def create_matrix():
     return [[random.randint(-10,10) for _ in range(5)] for _ in range(5)]
 def main():
