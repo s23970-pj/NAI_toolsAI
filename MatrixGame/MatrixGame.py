@@ -9,7 +9,12 @@ której pola posiadają losowe wartości od -10 do 10. Wartości z wybranych pó
 i odejmowane od punktów przeciwnika. Gra kończy się po zajęciu wszystkich pól, a wygrywa gracz z większą liczbą
 punktów. 
 
+Aby uruchomić grę, musisz mieć zainstalowane Python 3.12 oraz bibliotekę easyAI. Postępuj zgodnie z poniższymi krokami:
 
+Krok 1: Zainstaluj Pythona
+Jeśli nie masz zainstalowanego Pythona, pobierz i zainstaluj go z oficjalnej strony: https://www.python.org/downloads/
+
+Pobierz PyCharm->otwórz plik -> naciśnij Run-> w terminalu otworzy się gra
 """
 
 
@@ -113,7 +118,7 @@ class MatrixGame(TwoPlayerGame):
 ai = Negamax(6)
 
 # Tworzenie gry z graczem i AI
-game = PointGame([Human_Player(), AI_Player(ai)])
+game = MatrixGame([Human_Player(), AI_Player(ai)])
 
 # Rozpoczęcie gry
 history = game.play()
