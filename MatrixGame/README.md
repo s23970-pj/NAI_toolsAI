@@ -41,4 +41,5 @@ Można to zrobić za pomocą polecenia
 python -m venv venv
 ```
 
+![Zrzut ekranu 2024-10-26 o 2 19 35 PM](https://github.com/user-attachments/assets/aa9a059c-6d4a-4c89-b10a-7e3dc1b3d2dc)
 
