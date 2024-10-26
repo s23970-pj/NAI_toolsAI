@@ -42,4 +42,7 @@ python -m venv venv
 ```
 
 ![Zrzut ekranu 2024-10-26 o 2 19 35 PM](https://github.com/user-attachments/assets/aa9a059c-6d4a-4c89-b10a-7e3dc1b3d2dc)
+![Zrzut ekranu 2024-10-26 o 2 22 07 PM](https://github.com/user-attachments/assets/150345c5-0e8e-4996-bcfb-a0acdfe3b97a)
+
+![Zrzut ekranu 2024-10-26 o 2 22 56 PM](https://github.com/user-attachments/assets/40a2917e-5ccf-4ed6-afbf-948aa861e4c5)
 
