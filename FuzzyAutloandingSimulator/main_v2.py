@@ -30,24 +30,27 @@ screen_width, screen_height = 800, 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Automatic Plane Landing Simulation")
 
-# Colors
+# Colors for refe
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 GRAY = (50, 50, 50)
 
-# Define the fuzzy input and output variables
-altitude = ctrl.Antecedent(np.arange(0, 3001, 1), 'altitude')  # Altitude in feet
+# Define the fuzzy input and output variables\Antecendants are inputs to the fuzy system which provide information about plane condition
+altitude = ctrl.Antecedent(np.arange(0, 3001, 1), 'altitude')  # Altitude in feet range 0-3000
 ground_speed = ctrl.Antecedent(np.arange(60, 181, 1), 'ground_speed')  # Ground speed in knots
 distance_to_runway = ctrl.Antecedent(np.arange(0, 6.1, 0.1), 'distance_to_runway')  # Distance in nautical miles
 
 rate_of_descent = ctrl.Consequent(np.arange(0, 1501, 1), 'rate_of_descent')  # Target descent rate in fpm
 
 # Define membership functions based on Rules of Thumb for 3-degree glideslope
-altitude['high'] = fuzz.trimf(altitude.universe, [1000, 3000, 3000])
-altitude['medium'] = fuzz.trimf(altitude.universe, [500, 1500, 2500])
-altitude['low'] = fuzz.trimf(altitude.universe, [0, 0, 800])
-
+altitude['high'] = fuzz.trimf(altitude.universe, [1000, 3000, 3000]) # high altitudes at the beggining of approach
+altitude['medium'] = fuzz.trimf(altitude.universe, [500, 1500, 2500]) # medium at the intermediate approach
+altitude['low'] = fuzz.trimf(altitude.universe, [0, 0, 800]) # low at final aproach close to FLARE
+'''
+Rules of thumb in aviation are fast methods to calculate desired value. In this case we can use rule of thumb in calculating
+3 degree glide slope. Altitude = Distance * 300 feet. We can call it target altitude
+'''
 ground_speed['slow'] = fuzz.trimf(ground_speed.universe, [60, 60, 100])
 ground_speed['medium'] = fuzz.trimf(ground_speed.universe, [80, 120, 160])
 ground_speed['fast'] = fuzz.trimf(ground_speed.universe, [140, 180, 180])
@@ -60,7 +63,9 @@ distance_to_runway['close'] = fuzz.trimf(distance_to_runway.universe, [0, 0, 1])
 rate_of_descent['shallow'] = fuzz.trimf(rate_of_descent.universe, [0, 300, 600])
 rate_of_descent['moderate'] = fuzz.trimf(rate_of_descent.universe, [400, 700, 1000])
 rate_of_descent['steep'] = fuzz.trimf(rate_of_descent.universe, [800, 1200, 1500])
-
+'''
+Rate of descent rule of thumb is RoD = Ground Speed * 5
+'''
 # Define fuzzy rules to ensure continued descent
 rule1 = ctrl.Rule(distance_to_runway['far'] & ground_speed['fast'] & altitude['high'], rate_of_descent['steep'])
 rule2 = ctrl.Rule(distance_to_runway['medium'] & ground_speed['medium'] & altitude['medium'], rate_of_descent['moderate'])
@@ -75,7 +80,7 @@ rule6 = ctrl.Rule(altitude['low'] & distance_to_runway['close'], rate_of_descent
 landing_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6])
 landing_simulation = ctrl.ControlSystemSimulation(landing_ctrl)
 
-# Simulation parameters
+# Simulation initial parameters
 plane_x = 100  # Starting position of the plane on screen
 plane_altitude = 1800  # Initial altitude in feet
 initial_ground_speed = 120  # Initial ground speed in knots
@@ -85,11 +90,11 @@ distance_to_touchdown = 6  # Initial distance to runway in nautical miles
 clock = pygame.time.Clock()
 running = True
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for event in pygame.event.get(): # Process events in pygame event queue
+        if event.type == pygame.QUIT: #checking if the window button had been pressed
             running = False
 
-    # Calculate target altitude for 3-degree glideslope
+    # Calculate target altitude for 3-degree glideslope with Rule of Thumbs
     target_altitude = distance_to_touchdown * 300
     altitude_error = plane_altitude - target_altitude
 
@@ -102,7 +107,7 @@ while running:
     try:
         landing_simulation.compute()
         rate_of_descent_output = landing_simulation.output.get('rate_of_descent', 300)
-    except KeyError as e:
+    except KeyError as e:  #exception handling when fuzzy does not generate output default descent rate is 300 fpm (enough to survive)
         print(f"Warning: Missing output {e}, using default values")
         rate_of_descent_output = 300  # Use a default shallow descent rate if no output
 
