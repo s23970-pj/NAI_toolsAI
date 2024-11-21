@@ -61,12 +61,12 @@ def recommend_movies(data: pd.DataFrame, user: str, user_movie_matrix: pd.DataFr
         top_n (int): Liczba rekomendacji.
 
     Returns:
-        pd.DataFrame: Rekomendacje filmów.
+        pd.Series: Rekomendacje filmów.
     """
     cluster_label = kmeans.labels_[list(user_movie_matrix.index).index(user)]
     movies_watched = data[data['User'] == user]['Movie']
 
-    # Wybór filmów z tego samego klastra
+    # Wybór filmów z tego samego klastrze
     cluster_users = user_movie_matrix.index[kmeans.labels_ == cluster_label]
     same_cluster_movies = data[data['User'].isin(cluster_users) & (~data['Movie'].isin(movies_watched))]
 
@@ -86,12 +86,12 @@ def anti_recommend_movies(data: pd.DataFrame, user: str, user_movie_matrix: pd.D
         top_n (int): Liczba antyrekomendacji.
 
     Returns:
-        pd.DataFrame: Antyrekomendacje filmów.
+        pd.Series: Antyrekomendacje filmów.
     """
     cluster_label = kmeans.labels_[list(user_movie_matrix.index).index(user)]
     movies_watched = data[data['User'] == user]['Movie']
 
-    # Wybór filmów z tego samego klastra
+    # Wybór filmów z tego samego klastrze
     cluster_users = user_movie_matrix.index[kmeans.labels_ == cluster_label]
     same_cluster_movies = data[data['User'].isin(cluster_users) & (~data['Movie'].isin(movies_watched))]
 
@@ -99,7 +99,7 @@ def anti_recommend_movies(data: pd.DataFrame, user: str, user_movie_matrix: pd.D
 
 
 # Ścieżka do pliku
-file_path = '/Users/adriangoik/Desktop/NAI_toolsAI/Movie_clustering/Python_ML_AdrianGoik_s23970-master.xlsx'
+file_path = 'Movie_DB.xlsx'
 
 # Wczytanie i czyszczenie danych
 data = load_and_transform_data(file_path)
@@ -107,15 +107,22 @@ data = load_and_transform_data(file_path)
 # Przygotowanie macierzy i klastrów
 user_movie_matrix, kmeans = prepare_similarity_and_clustering(data)
 
-# Przykładowy użytkownik
-example_user = user_movie_matrix.index[0]
+# Wyświetlenie listy użytkowników
+print("Lista użytkowników:")
+users_list = user_movie_matrix.index.tolist()
+for i, user in enumerate(users_list):
+    print(f"{i}: {user}")
+
+# Wybranie użytkownika
+user_index = int(input("Wybierz numer użytkownika z listy: "))
+example_user = users_list[user_index]
 
 # Generowanie rekomendacji i antyrekomendacji
 recommended_movies = recommend_movies(data, example_user, user_movie_matrix, kmeans, top_n=5)
 anti_recommended_movies = anti_recommend_movies(data, example_user, user_movie_matrix, kmeans, top_n=5)
 
 # Wyświetlenie rekomendacji i antyrekomendacji
-print("Rekomendacje filmów:")
+print(f"\nRekomendacje filmów dla użytkownika '{example_user}':")
 print(recommended_movies)
-print("\nAntyrekomendacje filmów:")
+print(f"\nAntyrekomendacje filmów dla użytkownika '{example_user}':")
 print(anti_recommended_movies)
