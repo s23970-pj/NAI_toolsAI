@@ -13,21 +13,24 @@ def load_and_transform_data(file_path: str) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Dane w formacie [User, Movie, Rating].
     """
+    #Wczytanie danych z Excela
     data = pd.ExcelFile(file_path)
-    df = data.parse('Arkusz1')
-    users = df.iloc[:, 0]
-    ratings_data = df.iloc[:, 1:]
+    df = data.parse('Arkusz1') # Wczytanie danych z arkusza żeby zrobić z tego DataFrame
+    users = df.iloc[:, 0]  #Pierwsza kolumna użytkownicy
+    ratings_data = df.iloc[:, 1:] #Pozostałe filmy i oceny
 
     cleaned_data = []
+    # Iteracja przez wiersze i parsowanie danych do formatu [User, Movie, Rating]
     for index, row in ratings_data.iterrows():
         for col_idx in range(0, len(row), 2):  # Kolumny z filmami i ocenami
             movie = row.iloc[col_idx]  # Użycie iloc dla bezpieczeństwa
             if pd.notna(movie):
                 rating = row.iloc[col_idx + 1]  # Użycie iloc dla bezpieczeństwa
-                if pd.notna(rating):
+                if pd.notna(rating): # Sprawdzenie, czy ocena nie jest pusta
+                    # Dodanie rekordu w formacie [User, Movie, Rating]
                     cleaned_data.append({'User': users.iloc[index], 'Movie': movie, 'Rating': float(rating)})
 
-    return pd.DataFrame(cleaned_data)
+    return pd.DataFrame(cleaned_data) # Zwrot przekształconych danych
 
 
 def prepare_similarity_and_clustering(data: pd.DataFrame, n_clusters: int = 3):
@@ -41,6 +44,7 @@ def prepare_similarity_and_clustering(data: pd.DataFrame, n_clusters: int = 3):
     Returns:
         Tuple[pd.DataFrame, KMeans]: Macierz użytkowników oraz model KMeans.
     """
+    # Tworzenie macierzy użytkownik-film z ocenami
     user_movie_matrix = data.pivot_table(
         index='User', columns='Movie', values='Rating', fill_value=0
     )
@@ -66,7 +70,7 @@ def recommend_movies(data: pd.DataFrame, user: str, user_movie_matrix: pd.DataFr
     cluster_label = kmeans.labels_[list(user_movie_matrix.index).index(user)]
     movies_watched = data[data['User'] == user]['Movie']
 
-    # Wybór filmów z tego samego klastrze
+    # Wybór filmów w tym samym klasterze
     cluster_users = user_movie_matrix.index[kmeans.labels_ == cluster_label]
     same_cluster_movies = data[data['User'].isin(cluster_users) & (~data['Movie'].isin(movies_watched))]
 
@@ -91,7 +95,7 @@ def anti_recommend_movies(data: pd.DataFrame, user: str, user_movie_matrix: pd.D
     cluster_label = kmeans.labels_[list(user_movie_matrix.index).index(user)]
     movies_watched = data[data['User'] == user]['Movie']
 
-    # Wybór filmów z tego samego klastrze
+    # Wybór filmów w tym samym klasterze
     cluster_users = user_movie_matrix.index[kmeans.labels_ == cluster_label]
     same_cluster_movies = data[data['User'].isin(cluster_users) & (~data['Movie'].isin(movies_watched))]
 
