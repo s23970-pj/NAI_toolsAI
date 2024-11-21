@@ -1,3 +1,38 @@
+'''
+Autorzy: Adrian Goik, Łukasz Soldatke
+Opis problemu: Silnik do rekomendacji filmów, dla użytkowników z listy bazując na ich
+preferencjach.
+
+Instrukcja użycia:
+
+Python: Upewnij się, że masz zainstalowanego Pythona 3.7 lub nowszego.
+        Możesz to sprawdzić w terminalu/wierszu poleceń, wpisując:  python --version
+Biblioteki Python:
+ Zainstaluj wymagane biblioteki:
+        pandas
+        scikit-learn
+    W terminalu wpisz:
+   ~ pip install pandas scikit-learn #to samo dla pandas
+
+Plik Excel z danymi:
+ Program wymaga pliku Excel o nazwie Movie_DB.xlsx w katalogu ze skryptem.
+
+ Uruchomienie programu:
+
+    W terminalu/wierszu poleceń przejdź do katalogu, w którym znajduje się plik programu.
+~cd /ścieżka/do/katalogu
+
+Uruchom program:
+
+~ python Zjazd3_Movie_Recommend.py
+
+Interakcja z programem:
+
+Wybierz numer użytkownika z listy:
+Wprowadź numer użytkownika (np. 0 dla pierwszego użytkownika) i naciśnij Enter.
+
+'''
+
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import KMeans
