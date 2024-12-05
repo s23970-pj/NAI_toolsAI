@@ -1,4 +1,4 @@
-## Latest Project! - Data set classification using decision tree and SVM with visualization.
+## 1 )Latest Project! - Data set classification using decision tree and SVM with visualization.
 Using two Datasets stars and ionosphere:
 -Run instructions at the beginning of code
 -Below are effects of RUN: 
@@ -10,10 +10,10 @@ Using two Datasets stars and ionosphere:
 #### Ionosphere 
 ![decision_tree_ionosphere](https://github.com/user-attachments/assets/adec7c71-d841-4d9d-83a9-9ac99a56d9db)
 
-### MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
+###2) MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
 
 
-### FUZZY AUTOLAND SIMULATOR
+### 3) FUZZY AUTOLAND SIMULATOR
 Instructions in Polish 
 Na początku kodu dodaj opis problemu; wymień autorów rozwiązania; dodaj instrukcję przygotowania środowisk.
 
