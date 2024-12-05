@@ -19,8 +19,40 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import export_graphviz
 from sklearn.tree import plot_tree
+from sklearn.svm import SVC
+def svm_classifier(data: DataFrame, dataset_name: str):
+    """
+    Tworzy klasyfikator SVM, wyświetla informacje o nim oraz ocenia jego działanie na zbiorze danych.
+    :param data: Dane wejściowe
+    :param dataset_name: Nazwa zbioru danych (np. "ionosphere" lub "stars")
+    """
+    # Podział na cechy oraz etykiety
+    X = data.iloc[:, :-1]  # Cechy (wszystkie kolumny oprócz ostatniej)
+    y = data.iloc[:, -1]  # Etykiety (ostatnia kolumna)
 
+    # Podział na dane treningowe oraz testowe (80% do 20%)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+    # Inicjalizacja SVM
+    svm = SVC(kernel='linear', random_state=42)
+
+    # Dopasowanie modelu do danych treningowych
+    svm.fit(X_train, y_train)
+
+    # Prognoza na podstawie danych testowych
+    y_predict = svm.predict(X_test)
+
+    # Ocena trafności
+    accuracy_svm = accuracy_score(y_test, y_predict)
+    print(f"Accuracy of SVM - {dataset_name}: {accuracy_svm}")
+
+    # Wyświetlenie raportu klasyfikacji
+    print(f"\nClassification Report SVM- {dataset_name}:")
+    print(classification_report(y_test, y_predict))
+
+    # Wyświetlenie macierzy pomyłek
+    print(f"\nConfusion Matrix SVM - {dataset_name}:")
+    print(confusion_matrix(y_test, y_predict))
 def prepare_data(data: DataFrame, label_column_name: str, has_header: bool):
     """
     Przygotowuje dane do stworzenia drzewa decyzyjnego poprzez nadanie nagłówków jeżeli ich nie ma oraz przeniesienie
@@ -71,11 +103,11 @@ def decision_tree(data: DataFrame, export_file_suffix: str):
     print(f"Accuracy of decision tree - {export_file_suffix}: {accuracy_tree}")
 
     # Wyświetlenie raportu klasyfikacji
-    print(f"\nClassification Report - {export_file_suffix}:")
+    print(f"\nClassification Report DECISION TREE - {export_file_suffix}:")
     print(classification_report(y_test, y_predict))
 
     # Wyświetlenie macierzy pomyłek
-    print(f"\nConfusion Matrix - {export_file_suffix}:")
+    print(f"\nConfusion Matrix DECISION TREE- {export_file_suffix}:")
     print(confusion_matrix(y_test, y_predict))
 
     # Wizualizacja drzewa
@@ -123,4 +155,6 @@ print(prepared_stars_df.head())
 
 # Tworzenie drzew decyzyjnych dla każdego zestawu danych
 decision_tree(prepared_ionosphere_df, "ionosphere") #dla ionosphere
+svm_classifier(prepared_ionosphere_df, "ionosphere")  # SVM
 decision_tree(prepared_stars_df, "stars") # dla stars
+svm_classifier(prepared_stars_df, "stars")  # SVM
