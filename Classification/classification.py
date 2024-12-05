@@ -1,8 +1,20 @@
+'''
+Autorzy: Łukasz Soldatke, Adrian Goik
+Cel: Klasyfikacja dwóch różnych zbiorów danych za pomocą Drzewa Decyzyjnego oraz SVM.
+Analizujemy wyniki klasyfikacji, wizualizujemy dane oraz oceniamy jakość klasyfikatorów na podstawie metryk takich jak
+dokładność, precyzja, czułość i F1-score.
+Instrukcja użycia:
+Uruchom kod w środowisku Python (np. Jupyter Notebook, PyCharm).
+Kod korzysta z bibliotek takich jak pandas, numpy, matplotlib, seaborn oraz sklearn.
+Przed uruchomieniem upewnij się, że wszystkie wymagane biblioteki są zainstalowane lub zainstaluj je poleceniem:
+~pip install [nazwa_biblioteki]
+'''
+import dataset
 import graphviz
 import matplotlib.pyplot as plt
 import pandas as pd
 from pandas import DataFrame
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import export_graphviz
@@ -56,7 +68,15 @@ def decision_tree(data: DataFrame, export_file_suffix: str):
 
     # Ocena trafności
     accuracy_tree = accuracy_score(y_test, y_predict)
-    print(f"Accuracy of decision tree: {accuracy_tree}")
+    print(f"Accuracy of decision tree - {export_file_suffix}: {accuracy_tree}")
+
+    # Wyświetlenie raportu klasyfikacji
+    print(f"\nClassification Report - {export_file_suffix}:")
+    print(classification_report(y_test, y_predict))
+
+    # Wyświetlenie macierzy pomyłek
+    print(f"\nConfusion Matrix - {export_file_suffix}:")
+    print(confusion_matrix(y_test, y_predict))
 
     # Wizualizacja drzewa
     plt.figure(figsize=(20, 12))
@@ -66,6 +86,7 @@ def decision_tree(data: DataFrame, export_file_suffix: str):
         class_names=y.unique().astype(str),
         filled=True
     )
+    plt.title(f"Decision Tree - {export_file_suffix}")
     plt.show()
 
     # Zapis grafu do pliku
@@ -84,12 +105,13 @@ def decision_tree(data: DataFrame, export_file_suffix: str):
 
 
 # Ładowanie danych
-ionosphere_dataset_path = "./data/ionosphere/ionosphere.data"
-stars_dataset_path = "./data/star_classification/star_classification.csv"
+ionosphere_dataset_path = "Classification/data/ionosphere/ionosphere.data"
+stars_dataset_path = "Classification/data/star_classification/star_classification.csv"
 
 ionosphere_data = pd.read_csv(ionosphere_dataset_path, header=None)
 stars_data = pd.read_csv(stars_dataset_path)
-
+stars_data = stars_data[['u', 'g', 'r', 'i', 'z', 'redshift', 'class']]
+star_stats=stars_data.describe()
 # Przygotowanie danych
 prepared_ionosphere_df = prepare_data(ionosphere_data, "label", False)
 prepared_stars_df = prepare_data(stars_data, "class", True)
@@ -100,5 +122,5 @@ print("Stars:")
 print(prepared_stars_df.head())
 
 # Tworzenie drzew decyzyjnych dla każdego zestawu danych
-decision_tree(prepared_ionosphere_df, "ionosphere")
-decision_tree(prepared_stars_df, "stars")
+decision_tree(prepared_ionosphere_df, "ionosphere") #dla ionosphere
+decision_tree(prepared_stars_df, "stars") # dla stars
