@@ -1,3 +1,15 @@
+## Latest Project! - Data set classification using decision tree and SVM with visualization.
+Using two Datasets stars and ionosphere:
+-Run instructions at the beginning of code
+-Below are effects of RUN: 
+
+![Run_Report](https://github.com/user-attachments/assets/a66e674c-5c20-46d0-ae38-c3e258c7c872)
+#### STARS decision tree based on 100,000 observations of space taken by the SDSS (Sloan Digital Sky Survey)
+![decision_tree_stars](https://github.com/user-attachments/assets/29e3b43d-d944-4c2d-bd7e-6861fb998fe9)
+
+#### Ionosphere 
+![decision_tree_ionosphere](https://github.com/user-attachments/assets/adec7c71-d841-4d9d-83a9-9ac99a56d9db)
+
 ### MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
 
 
