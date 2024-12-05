@@ -3,7 +3,10 @@ Using two Datasets stars and ionosphere:
 -Run instructions at the beginning of code
 -Below are effects of RUN: 
 
-![Run_Report](https://github.com/user-attachments/assets/a66e674c-5c20-46d0-ae38-c3e258c7c872)
+![Run_Report_stars](https://github.com/user-attachments/assets/2f1b46aa-79ed-4ab4-99ca-442a77eeda67)
+![Run_Report_ionosphere](https://github.com/user-attachments/assets/d558c707-daf5-4246-a23f-a9b7c1898e4c)
+
+
 #### STARS decision tree based on 100,000 observations of space taken by the SDSS (Sloan Digital Sky Survey)
 ![decision_tree_stars](https://github.com/user-attachments/assets/29e3b43d-d944-4c2d-bd7e-6861fb998fe9)
 
