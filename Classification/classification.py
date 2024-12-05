@@ -20,6 +20,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import export_graphviz
 from sklearn.tree import plot_tree
 from sklearn.svm import SVC
+
 def svm_classifier(data: DataFrame, dataset_name: str):
     """
     Tworzy klasyfikator SVM, wyświetla informacje o nim oraz ocenia jego działanie na zbiorze danych.
@@ -53,6 +54,7 @@ def svm_classifier(data: DataFrame, dataset_name: str):
     # Wyświetlenie macierzy pomyłek
     print(f"\nConfusion Matrix SVM - {dataset_name}:")
     print(confusion_matrix(y_test, y_predict))
+
 def prepare_data(data: DataFrame, label_column_name: str, has_header: bool):
     """
     Przygotowuje dane do stworzenia drzewa decyzyjnego poprzez nadanie nagłówków jeżeli ich nie ma oraz przeniesienie
@@ -137,8 +139,8 @@ def decision_tree(data: DataFrame, export_file_suffix: str):
 
 
 # Ładowanie danych
-ionosphere_dataset_path = "Classification/data/ionosphere/ionosphere.data"
-stars_dataset_path = "Classification/data/star_classification/star_classification.csv"
+ionosphere_dataset_path = "data/ionosphere/ionosphere.data"
+stars_dataset_path = "data/star_classification/star_classification.csv"
 
 ionosphere_data = pd.read_csv(ionosphere_dataset_path, header=None)
 stars_data = pd.read_csv(stars_dataset_path)
@@ -153,7 +155,7 @@ print(prepared_ionosphere_df.head())
 print("Stars:")
 print(prepared_stars_df.head())
 
-# Tworzenie drzew decyzyjnych dla każdego zestawu danych
+# Tworzenie drzew decyzyjnych i SVM dla każdego zestawu danych
 decision_tree(prepared_ionosphere_df, "ionosphere") #dla ionosphere
 svm_classifier(prepared_ionosphere_df, "ionosphere")  # SVM
 decision_tree(prepared_stars_df, "stars") # dla stars
