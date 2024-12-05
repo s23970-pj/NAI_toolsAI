@@ -10,7 +10,7 @@ Using two Datasets stars and ionosphere:
 #### Ionosphere 
 ![decision_tree_ionosphere](https://github.com/user-attachments/assets/adec7c71-d841-4d9d-83a9-9ac99a56d9db)
 
-###2) MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
+### 2) MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
 
 
 ### 3) FUZZY AUTOLAND SIMULATOR
