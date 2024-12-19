@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import mnist_reader
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -96,6 +97,10 @@ cf_x_train_flat = cf_x_train.reshape(cf_x_train.shape[0], -1)  # "Spłaszczenie"
 cifar10_data = pd.DataFrame(cf_x_train_flat)
 
 cifar10_data['label'] = cf_y_train
+
+# fashion-mnist
+# fm_X_train, fm_y_train = mnist_reader.load_mnist('data/fashion', kind='train')
+# fm_X_test, fm_y_test = mnist_reader.load_mnist('data/fashion', kind='t10k')
 
 # Przygotowanie danych
 prepared_stars_df = prepare_data(stars_data, "class", True)
