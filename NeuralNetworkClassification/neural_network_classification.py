@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 from pandas import DataFrame
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -31,10 +32,11 @@ def prepare_data(data: DataFrame, label_column_name: str, has_header: bool):
     return data
 
 
-def neural_network(data: DataFrame):
+def neural_network(data: DataFrame, input_neurons: int):
     """
     Tworzy sieć neuronową i wyświetla informacje o niej.
     :param data: Dane wejściowe
+    :param input_neurons: Liczba neuronów w warstwie wejściowej. Liczba neuronów w kolejnej warstwie to połowa tej wartości.
     """
     # Podział na cechy oraz etykiety
     X = data.iloc[:, :-1]  # Cechy (wszystkie kolumny oprócz ostatniej)
@@ -54,8 +56,8 @@ def neural_network(data: DataFrame):
 
     # Tworzenie modelu sekwencyjnie - kolejne warstwy dodawane jedna po drugiej
     model = Sequential([
-        Dense(32, activation='relu', input_shape=(X_train.shape[1],)), # Warstwa wejściowa z funkcją aktywacji ReLU i rozmiarem danych wejściowych odpowiadającym liczbie kolumn w danych treningowych
-        Dense(16, activation='relu'),  # Warstwa ukryta
+        Dense(input_neurons, activation='relu', input_shape=(X_train.shape[1],)), # Warstwa wejściowa z funkcją aktywacji ReLU i rozmiarem danych wejściowych odpowiadającym liczbie kolumn w danych treningowych
+        Dense(int(input_neurons / 2), activation='relu'),  # Warstwa ukryta
         Dense(len(np.unique(y_encoded)), activation='softmax') # Warstwa wyjściowa z trzema neuronami, co odpowiada ilości klas
     ])
 
@@ -87,11 +89,26 @@ stars_data = pd.read_csv(stars_dataset_path)
 stars_data = stars_data[['u', 'g', 'r', 'i', 'z', 'redshift', 'class']]
 star_stats = stars_data.describe()
 
+# CIFAR-10
+(cf_x_train, cf_y_train), (cf_x_test, cf_y_test) = tf.keras.datasets.cifar10.load_data()
+
+cf_x_train_flat = cf_x_train.reshape(cf_x_train.shape[0], -1)  # "Spłaszczenie" obrazów
+cifar10_data = pd.DataFrame(cf_x_train_flat)
+
+cifar10_data['label'] = cf_y_train
+
 # Przygotowanie danych
 prepared_stars_df = prepare_data(stars_data, "class", True)
+prepared_cifar10_df = prepare_data(cifar10_data, "label", True)
 
 print("Stars:")
 print(prepared_stars_df.head())
 print()
 
-neural_network(prepared_stars_df)
+neural_network(prepared_stars_df, 64)
+
+print("CIFAR-10:")
+print(prepared_cifar10_df.head())
+print()
+
+neural_network(prepared_cifar10_df, 128)
