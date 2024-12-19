@@ -23,7 +23,7 @@ def plot_confusion_matrix(y_true, y_pred, class_names):
 
 
 # Wczytanie danych
-stars_data = pd.read_csv("/Users/adriangoik/Desktop/NAI_toolsAI/NeuralNetworkClassification/star_classification/star_classification.csv")
+stars_data = pd.read_csv("star_classification/star_classification.csv")
 stars_data = stars_data[['u', 'g', 'r', 'i', 'z', 'redshift', 'class']]
 
 # Przygotowanie danych
