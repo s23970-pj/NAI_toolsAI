@@ -1,6 +1,8 @@
 ## 1 )Latest Project! - Using neural network for classification problems
 
 Run reports:
+![Run_Report_IonosphereCNN](https://github.com/user-attachments/assets/440d1575-97eb-4ddd-a06c-67cee84901b1)
+
 ![Run_Report_IonosphereCNN](https://github.com/user-attachments/assets/bb22aa79-47f4-4241-96e7-0d49a393ee28)
 ![Run_Report_FashionMnist](https://github.com/user-attachments/assets/0a48fc5e-cc33-4eef-af71-210a5f4690c8)
 ![Run_Report_Animals](https://github.com/user-attachments/assets/de6457bc-31db-47b4-ba03-659416583d72)
