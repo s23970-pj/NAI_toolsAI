@@ -1,4 +1,8 @@
 ## 1 )Latest Project! - Using neural network for classification problems
+Confusion matrices: 
+![Confusion Matrix - Logistic Regression](https://github.com/user-attachments/assets/f93ec3c3-bc32-4ff2-ab57-b1f6604c3db1)
+![Confusion_Matrix_Animals](https://github.com/user-attachments/assets/316e4350-22d5-41f0-b9d3-8d168007e4a6)
+![Confusion Matrix - Neural Network](https://github.com/user-attachments/assets/553e1e03-cd6c-484d-8f1b-b5042772572e)
 
 Run reports:
 ![Run_Report_IonosphereCNN](https://github.com/user-attachments/assets/440d1575-97eb-4ddd-a06c-67cee84901b1)
