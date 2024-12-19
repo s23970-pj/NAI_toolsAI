@@ -1,4 +1,17 @@
-## 1 )Latest Project! - Data set classification using decision tree and SVM with visualization.
+## 1 )Latest Project! - Using neural network for classification problems
+
+Run reports:
+![Run_Report_IonosphereCNN](https://github.com/user-attachments/assets/bb22aa79-47f4-4241-96e7-0d49a393ee28)
+![Run_Report_FashionMnist](https://github.com/user-attachments/assets/0a48fc5e-cc33-4eef-af71-210a5f4690c8)
+![Run_Report_Animals](https://github.com/user-attachments/assets/de6457bc-31db-47b4-ba03-659416583d72)
+![Run_Report_IsThatSanta](https://github.com/user-attachments/assets/c30e6580-8825-4c28-bb05-dc83c2498c03)
+
+Databases used:
+https://www.kaggle.com/datasets/borhanitrash/animal-image-classification-dataset/data
+https://www.kaggle.com/datasets/deepcontractor/is-that-santa-image-classification/code
+https://machinelearningmastery.com/standard-machine-learning-datasets/ --> IONOSPHERE DATABASE
+
+###2) Data set classification using decision tree and SVM with visualization.
 Using two Datasets stars and ionosphere:
 -Run instructions at the beginning of code
 -Below are effects of RUN: 
