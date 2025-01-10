@@ -23,3 +23,4 @@
   #  Następny utwór: wyprostowany palec wskazujący.
    # Poprzedni utwór: wyprostowany palec środkowy.
     #Wyciszenie: złączenie kciuka i małego palca
+
