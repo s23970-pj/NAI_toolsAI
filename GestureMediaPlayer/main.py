@@ -27,8 +27,6 @@ def recognize_gesture(hand_landmarks,frame):
     index_tip = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
     index_pip = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_PIP]
     thumb_ip = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_IP]
-    ring_tip = hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP]
-    ring_pip = hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_PIP]
     # Pauza/Play: Gest w porządku kciuk i palec wskazujący złączone
     if abs(thumb_tip.x - index_tip.x) < 0.05 and abs(thumb_tip.y - index_tip.y) < 0.05:
         pyautogui.press('space')
@@ -38,17 +36,15 @@ def recognize_gesture(hand_landmarks,frame):
         pyautogui.press('right')
         cv2.putText(frame, 'Next', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     # Poprzedni utwór: Kciuk w górę "LIKE"
-    elif ring_tip.y < ring_pip.y:
+    elif thumb_tip.y < thumb_ip.y:
         pyautogui.press('left')
-        cv2.putText(frame, 'Previous', (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(frame, 'Previous', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     # Wyciszenie poprzez złączenie wszystkich palców
 
     elif abs(thumb_tip.x - pinky_tip.x) < 0.05 and abs(thumb_tip.y - pinky_tip.y) < 0.05:
         pyautogui.press('m')
         cv2.putText(frame, 'Mute', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-
 # !!! POPRAWIĆ MUTE !!! NIE ROZPOZNAJE
-# pozmieniać gesty
 
 #inicjalizacja kamery
 while cap.isOpened():
