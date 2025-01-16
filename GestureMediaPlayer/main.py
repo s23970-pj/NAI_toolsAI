@@ -15,11 +15,13 @@ import cv2
 import mediapipe as mp
 import pyautogui
 import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
 
 # Konfiguracja Spotify API
-SPOTIPY_CLIENT_ID = ''
-SPOTIPY_CLIENT_SECRET = ''
-SPOTIPY_REDIRECT_URI = ''
+SPOTIPY_CLIENT_ID = 'c67837e142a24c31b48f9ea36d7f30ba'
+SPOTIPY_CLIENT_SECRET = 'b6b49b16bace4d5789129128d4b015ae'
+SPOTIPY_REDIRECT_URI = 'https://open.spotify.com/'
 
 scope = "user-modify-playback-state user-read-playback-state"
 spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
@@ -67,11 +69,15 @@ def recognize_gesture(hand_landmarks, frame):
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
-            # pyautogui.press('space')
-            spotify.pause_playback()
+            playback_state = spotify.current_playback()
+            if playback_state and playback_state['is_playing']:
+                spotify.pause_playback()
+            else:
+                spotify.start_playback()
             cv2.putText(frame, 'Pause/Play', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             gesture_start = 0.0
             last_gesture_time = time.time()
+
     # Następny utwór: Wyprostowany palec wskazujący
     elif index_tip.y < index_pip.y:
         if gesture != "next":
@@ -109,22 +115,24 @@ def recognize_gesture(hand_landmarks, frame):
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
-            # pyautogui.press('m')
-
-            if not is_muted:
-                spotify.volume(0)
+            devices = spotify.devices()
+            if not devices['devices']:
+                cv2.putText(frame, 'No Active Device', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             else:
-                spotify.volume(50)
-            is_muted = not is_muted
-
-            cv2.putText(frame, 'Mute', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                if not is_muted:
+                    spotify.volume(0)
+                else:
+                    spotify.volume(50)
+                is_muted = not is_muted
+                cv2.putText(frame, 'Mute', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             gesture_start = 0.0
             last_gesture_time = time.time()
 
-    # Display gesture info on the frame
     cv2.putText(frame, f'Gesture: {gesture}', (10, 400), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-    cv2.putText(frame, f'Hold: {time.time() - gesture_start:.2f}s', (10, 440), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-    cv2.putText(frame, f'Cooldown: {time.time() - last_gesture_time:.2f}s', (10, 480), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+    cv2.putText(frame, f'Hold Time: {time.time() - gesture_start:.2f}s', (10, 440), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                (255, 255, 255), 2)
+    cv2.putText(frame, f'Cooldown: {time.time() - last_gesture_time:.2f}s', (10, 480), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                (255, 255, 255), 2)
 
 
 # Initialize camera
