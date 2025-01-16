@@ -14,6 +14,18 @@ import time
 import cv2
 import mediapipe as mp
 import pyautogui
+import spotipy
+
+# Konfiguracja Spotify API
+SPOTIPY_CLIENT_ID = ''
+SPOTIPY_CLIENT_SECRET = ''
+SPOTIPY_REDIRECT_URI = ''
+
+scope = "user-modify-playback-state user-read-playback-state"
+spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
+                                                     client_secret=SPOTIPY_CLIENT_SECRET,
+                                                     redirect_uri=SPOTIPY_REDIRECT_URI,
+                                                     scope=scope))
 
 # Computer Vision i Mediapipe do rozpoznawania gestów
 mp_hands = mp.solutions.hands
@@ -29,10 +41,12 @@ gesture_cooldown = 1.5  # Czas, który musi minąć od ostatniego wykonania gest
 
 gesture = None
 
+is_muted = False
+
 
 # Recognize gestures
 def recognize_gesture(hand_landmarks, frame):
-    global gesture_start, last_gesture_time, gesture_threshold, gesture_cooldown, gesture
+    global gesture_start, last_gesture_time, gesture_threshold, gesture_cooldown, gesture, is_muted
 
     thumb_tip = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP]
     index_tip = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
@@ -53,7 +67,8 @@ def recognize_gesture(hand_landmarks, frame):
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
-            pyautogui.press('space')
+            # pyautogui.press('space')
+            spotify.pause_playback()
             cv2.putText(frame, 'Pause/Play', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             gesture_start = 0.0
             last_gesture_time = time.time()
@@ -66,7 +81,8 @@ def recognize_gesture(hand_landmarks, frame):
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
-            pyautogui.hotkey('ctrl', 'right')  # pyautogui.press('right')
+            # pyautogui.hotkey('ctrl', 'right')  # pyautogui.press('right')
+            spotify.next_track()
             cv2.putText(frame, 'Next', (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             gesture_start = 0.0
             last_gesture_time = time.time()
@@ -79,7 +95,8 @@ def recognize_gesture(hand_landmarks, frame):
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
-            pyautogui.hotkey('ctrl', 'left')  # pyautogui.press('left')
+            # pyautogui.hotkey('ctrl', 'left')  # pyautogui.press('left')
+            spotify.previous_track()
             cv2.putText(frame, 'Previous', (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             gesture_start = 0.0
             last_gesture_time = time.time()
@@ -92,7 +109,14 @@ def recognize_gesture(hand_landmarks, frame):
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
-            pyautogui.press('m')
+            # pyautogui.press('m')
+
+            if not is_muted:
+                spotify.volume(0)
+            else:
+                spotify.volume(50)
+            is_muted = not is_muted
+
             cv2.putText(frame, 'Mute', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             gesture_start = 0.0
             last_gesture_time = time.time()
