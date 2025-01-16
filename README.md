@@ -1,8 +1,12 @@
 ## 1) GESTURE CONTROLLED SPOTIFY
 using Computer vision
 <img width="1273" alt="Pasted image 20250111102725" src="https://github.com/user-attachments/assets/4283099d-6161-49c9-937c-baf39fcf367b" />
-
-
+#Mute gesture open hand horizontally
+![0116](https://github.com/user-attachments/assets/62234897-f816-41bd-ac40-85e26fa4099c)
+#Pause/Play - pinch sign
+![0116(1)](https://github.com/user-attachments/assets/e1a1a116-1533-4786-8ac8-04885e7b63ee)
+#Next - Index finger up, Previous - Like sign
+![0116(2)](https://github.com/user-attachments/assets/56201b0f-856f-4f69-b9ef-5f55153754fb)
 
 
 
