@@ -1,24 +1,34 @@
-'''
+"""
+Odtwarzacz sterowany gestami
+
 Autorzy: Adrian Goik, Łukasz Soldatke
 
-Opis problemu: Sterowanie podstawowymi funkcjami spotify poprzez gesty
+Opis problemu:
+Sterowanie podstawowymi funkcjami Spotify za pomocą gestów dłoni rozpoznawanych przy użyciu MediaPipe i OpenCV.
 
 Instrukcja uruchomienia:
-Pobrać biblioteki
--openCV
--MediaPipe
--PyAutoGUI - jezeli klawisze
--spotipy
-można użyć następującego polecenia:
-~pip install opencv-python mediapipe pyautogui spotipy
+1. Pobrać wymagane biblioteki:
+   - opencv-python
+   - mediapipe
+   - pyautogui (opcjonalnie, jeśli używane są klawisze)
+   - spotipy
+   Można użyć następującego polecenia:
+   ~pip install opencv-python mediapipe pyautogui spotipy
 
-KONFIGURACJA SPOTIFY API:
-1. wejdź na stronę https://developer.spotify.com/documentation/web-api
-2. W zakładce Dashboard uzyskaj swój własny: Client secret i client ID. Tylko dla użytkowników premium.
-3. Wstaw odpowiednio do zmiennych SPOTIPY_CLIENT_ID = 'TWÓJ_ID'
-SPOTIPY_CLIENT_SECRET='TWÓJ_NR_SECRET'
+2. KONFIGURACJA SPOTIFY API:
+   - Wejdź na stronę https://developer.spotify.com/documentation/web-api.
+   - W zakładce Dashboard uzyskaj swój własny Client ID i Client Secret (tylko dla użytkowników premium).
+   - Wstaw odpowiednio do zmiennych SPOTIPY_CLIENT_ID i SPOTIPY_CLIENT_SECRET.
 
-'''
+Działanie programu:
+- Program używa kamery internetowej do śledzenia dłoni i rozpoznawania gestów.
+- Rozpoznane gesty sterują odtwarzaczem Spotify (pauza/play, następny utwór, poprzedni utwór, wyciszenie).
+-    Pauza/Play: Gest  kciuk i palec wskazujący złączone (jakby szczypanie)
+-    Następny utwór: Wyprostowany palec wskazujący
+-    Poprzedni utwór: Znak LIKE, kciuk w górę
+-    Wyciszenie: Mały palec uniesiony i wyraźnie wyżej niż inne palce
+
+"""
 
 import time
 import cv2
@@ -29,11 +39,11 @@ from spotipy.oauth2 import SpotifyOAuth
 
 
 # Konfiguracja Spotify API
-SPOTIPY_CLIENT_ID = 'c67837e142a24c31b48f9ea36d7f30ba'
-SPOTIPY_CLIENT_SECRET = 'b6b49b16bace4d5789129128d4b015ae'
+SPOTIPY_CLIENT_ID = ''
+SPOTIPY_CLIENT_SECRET = ''
 SPOTIPY_REDIRECT_URI = 'https://open.spotify.com/'
 
-
+# Zakres uprawnień wymagany przez spotify API
 scope = "user-modify-playback-state user-read-playback-state"
 spotify = spotipy.Spotify(
     auth_manager=SpotifyOAuth(
@@ -51,7 +61,7 @@ mp_drawing = mp.solutions.drawing_utils
 hands = mp_hands.Hands(min_detection_confidence=0.7)
 cap = cv2.VideoCapture(0)
 
-# Gesture timing variables
+# Dodanie do gestów opóźnień czasowych
 gesture_start = 0.0  # Czas rozpoczęcia wykonywania gestu
 last_gesture_time = 0.0  # Czas wykonania ostatniego gestu
 gesture_threshold = 1.0  # Czas przytrzymania gestu
@@ -62,8 +72,21 @@ gesture = None
 is_muted = False
 
 
-# Recognize gestures
+# Funkcja do rozpoznawania gestów
 def recognize_gesture(hand_landmarks, frame):
+    """
+      Rozpoznaje gesty na podstawie landmarków dłoni i wykonuje odpowiednie akcje.
+
+      Args:
+          hand_landmarks: Wynik przetwarzania landmarków dłoni przez MediaPipe.
+          frame: Aktualna klatka obrazu z kamery.
+
+      Gesty obsługiwane:
+          - Pauza/Play: Kciuk i palec wskazujący dotykają się.
+          - Następny utwór: Palec wskazujący wyprostowany.
+          - Poprzedni utwór: Kciuk skierowany w górę.
+          - Wyciszenie: Mały palec uniesiony wyżej niż pozostałe palce.
+      """
     global gesture_start, last_gesture_time, gesture_threshold, gesture_cooldown, gesture, is_muted
 
     thumb_tip = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP]
@@ -153,23 +176,28 @@ def recognize_gesture(hand_landmarks, frame):
 
 # Initialize camera
 while cap.isOpened():
+    """
+    Odczytuje obraz z kamery, przetwarza go za pomocą MediaPipe
+    oraz wywołuje funkcję rozpoznawania gestów.
+    """
     ret, frame = cap.read()
     if not ret:
         break
 
-    # Convert image to RGB
+    # Konwertuje obraz do RGB
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(frame_rgb)
 
-    # Detect and process landmarks
+    # Rozpoznawanie tzw. landmarków (gestów)
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
             mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
             recognize_gesture(hand_landmarks, frame)
-
+#Wyświetlanie obrazu
     cv2.imshow('Hand Tracking', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+#Zwalnianie zasobów
 cap.release()
 cv2.destroyAllWindows()
