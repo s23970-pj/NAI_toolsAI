@@ -19,15 +19,21 @@ from spotipy.oauth2 import SpotifyOAuth
 
 
 # Konfiguracja Spotify API
-SPOTIPY_CLIENT_ID = ''
-SPOTIPY_CLIENT_SECRET = ''
+SPOTIPY_CLIENT_ID = 'c67837e142a24c31b48f9ea36d7f30ba'
+SPOTIPY_CLIENT_SECRET = 'b6b49b16bace4d5789129128d4b015ae'
 SPOTIPY_REDIRECT_URI = 'https://open.spotify.com/'
 
+
 scope = "user-modify-playback-state user-read-playback-state"
-spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
-                                                     client_secret=SPOTIPY_CLIENT_SECRET,
-                                                     redirect_uri=SPOTIPY_REDIRECT_URI,
-                                                     scope=scope))
+spotify = spotipy.Spotify(
+    auth_manager=SpotifyOAuth(
+        client_id=SPOTIPY_CLIENT_ID,
+        client_secret=SPOTIPY_CLIENT_SECRET,
+        redirect_uri=SPOTIPY_REDIRECT_URI,
+        scope=scope,
+    ),
+    requests_timeout=10  # Ustawienie limitu czasu na 10 sekund
+)
 
 # Computer Vision i Mediapipe do rozpoznawania gestów
 mp_hands = mp.solutions.hands
