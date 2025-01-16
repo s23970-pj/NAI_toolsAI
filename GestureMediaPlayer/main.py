@@ -1,13 +1,23 @@
 '''
-Odtwarzacz sterowany gestami
+Autorzy: Adrian Goik, Łukasz Soldatke
+
+Opis problemu: Sterowanie podstawowymi funkcjami spotify poprzez gesty
 
 Instrukcja uruchomienia:
 Pobrać biblioteki
 -openCV
 -MediaPipe
-_PyAutoGUI
+-PyAutoGUI - jezeli klawisze
+-spotipy
 można użyć następującego polecenia:
-~pip install opencv-python mediapipe pyautogui
+~pip install opencv-python mediapipe pyautogui spotipy
+
+KONFIGURACJA SPOTIFY API:
+1. wejdź na stronę https://developer.spotify.com/documentation/web-api
+2. W zakładce Dashboard uzyskaj swój własny: Client secret i client ID. Tylko dla użytkowników premium.
+3. Wstaw odpowiednio do zmiennych SPOTIPY_CLIENT_ID = 'TWÓJ_ID'
+SPOTIPY_CLIENT_SECRET='TWÓJ_NR_SECRET'
+
 '''
 
 import time
