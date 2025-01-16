@@ -41,7 +41,7 @@ from spotipy.oauth2 import SpotifyOAuth
 # Konfiguracja Spotify API
 SPOTIPY_CLIENT_ID = ''
 SPOTIPY_CLIENT_SECRET = ''
-SPOTIPY_REDIRECT_URI = 'https://open.spotify.com/'
+SPOTIPY_REDIRECT_URI = 'http://localhost:3000/callback'
 
 # Zakres uprawnień wymagany przez spotify API
 scope = "user-modify-playback-state user-read-playback-state"
@@ -122,7 +122,7 @@ def recognize_gesture(hand_landmarks, frame):
             gesture_start = 0.0
             last_gesture_time = time.time()
 
-    # Następny utwór: Wyprostowany palec wskazujący
+    # Następny utwór: Dłoń w pionie
     elif index_tip.y < index_pip.y:
         if gesture != "next":
             gesture_start = 0.0
@@ -150,8 +150,8 @@ def recognize_gesture(hand_landmarks, frame):
             cv2.putText(frame, 'Previous', (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             gesture_start = 0.0
             last_gesture_time = time.time()
-    # Wyciszenie: Mały palec uniesiony i wyraźnie wyżej niż inne palce
-    if pinky_tip.y < pinky_pip.y - 0.02 and pinky_tip.y < index_tip.y and pinky_tip.y < thumb_tip.y:
+    # Wyciszenie: Dłoń w poziomie
+    elif pinky_tip.y < pinky_pip.y - 0.02 and pinky_tip.y < index_tip.y and pinky_tip.y < thumb_tip.y:
         if gesture != "mute":
             gesture_start = 0.0
         gesture = "mute"
