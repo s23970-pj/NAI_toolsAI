@@ -27,10 +27,12 @@ last_gesture_time = 0.0  # Czas wykonania ostatniego gestu
 gesture_threshold = 5.0  # Czas przytrzymania gestu
 gesture_cooldown = 2.0  # Czas, który musi minąć od ostatniego wykonania gestu
 
+gesture = None
+
 
 # Obsługa gestów pyautogui
 def recognize_gesture(hand_landmarks, frame):
-    global gesture_start, last_gesture_time, gesture_cooldown
+    global gesture_start, last_gesture_time, gesture_threshold, gesture_cooldown, gesture
 
     thumb_tip = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP]
     pinky_tip = hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP]
@@ -40,6 +42,10 @@ def recognize_gesture(hand_landmarks, frame):
 
     # Pauza/Play: Gest w porządku kciuk i palec wskazujący złączone
     if abs(thumb_tip.x - index_tip.x) < 0.05 and abs(thumb_tip.y - index_tip.y) < 0.05:
+        if gesture != "play_pause":
+            gesture_start = 0.0
+        gesture = "play_pause"
+
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
@@ -49,6 +55,10 @@ def recognize_gesture(hand_landmarks, frame):
             last_gesture_time = time.time()
     # Wyprostowany palec wskazujący
     elif index_tip.x < index_pip.y:
+        if gesture != "next":
+            gesture_start = 0.0
+        gesture = "next"
+
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
@@ -58,6 +68,10 @@ def recognize_gesture(hand_landmarks, frame):
             last_gesture_time = time.time()
     # Poprzedni utwór: Kciuk w górę "LIKE"
     elif thumb_tip.y < thumb_ip.y:
+        if gesture != "previous":
+            gesture_start = 0.0
+        gesture = "previous"
+        
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
@@ -68,6 +82,10 @@ def recognize_gesture(hand_landmarks, frame):
     # Wyciszenie poprzez złączenie wszystkich palców
     # !!! POPRAWIĆ MUTE !!! NIE ROZPOZNAJE
     elif abs(thumb_tip.x - pinky_tip.x) < 0.05 and abs(thumb_tip.y - pinky_tip.y) < 0.05:
+        if gesture != "mute":
+            gesture_start = 0.0
+        gesture = "mute"
+        
         if gesture_start == 0.0:
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
@@ -78,6 +96,7 @@ def recognize_gesture(hand_landmarks, frame):
     else:
         gesture_start = 0.0
 
+    print(f"gesture: {gesture}")
     print(f"gesture_hold: {time.time() - gesture_start}")
     print(f"last_gesture: {time.time() - last_gesture_time}")
 
