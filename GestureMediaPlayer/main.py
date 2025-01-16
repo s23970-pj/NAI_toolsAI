@@ -71,6 +71,11 @@ gesture = None
 
 is_muted = False
 
+devices = spotify.devices()
+print("Available devices:")
+for device in devices['devices']:
+    print(f"Name: {device['name']}, Type: {device['type']}, ID: {device['id']}")
+
 
 # Funkcja do rozpoznawania gestów
 def recognize_gesture(hand_landmarks, frame):
@@ -155,15 +160,32 @@ def recognize_gesture(hand_landmarks, frame):
             gesture_start = time.time()
         elif time.time() - gesture_start > gesture_threshold and time.time() - last_gesture_time > gesture_cooldown:
             devices = spotify.devices()
-            if not devices['devices']:
-                cv2.putText(frame, 'No Active Device', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-            else:
-                if not is_muted:
-                    spotify.volume(0)
+            active_device = next((d for d in devices['devices'] if d['is_active']), None)
+
+            if not active_device:
+                # Jeśli brak aktywnego urządzenia, spróbuj przenieść odtwarzanie na pierwsze dostępne urządzenie
+                if devices['devices']:
+                    device_id = devices['devices'][0]['id']
+                    spotify.transfer_playback(device_id=device_id, force_play=True)
+                    active_device = devices['devices'][0]
+                    print(f"Transferred playback to device: {active_device['name']}")
                 else:
-                    spotify.volume(50)
+                    print("No active devices found. Ensure Spotify is running on a device.")
+                    cv2.putText(frame, 'No Active Device', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                    return
+
+            try:
+                # Przełączanie wyciszenia
+                if not is_muted:
+                    spotify.volume(0, device_id=active_device['id'])  # Ustaw głośność na 0
+                else:
+                    spotify.volume(50, device_id=active_device['id'])  # Przywróć głośność
                 is_muted = not is_muted
-                cv2.putText(frame, 'Mute', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                cv2.putText(frame, 'Mute Toggled', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            except Exception as e:
+                print(f"Error setting volume: {e}")
+                cv2.putText(frame, 'Error Muting', (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+
             gesture_start = 0.0
             last_gesture_time = time.time()
 
