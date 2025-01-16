@@ -1,5 +1,19 @@
-[cifar10_log.txt](https://github.com/user-attachments/files/18204066/cifar10_log.txt)## 1 )Latest Project! - Using neural network for classification problems
+## 1) GESTURE CONTROLLED SPOTIFY
+using Computer vision
+<img width="1273" alt="Pasted image 20250111102725" src="https://github.com/user-attachments/assets/4283099d-6161-49c9-937c-baf39fcf367b" />
+#Mute gesture open hand horizontally<br>
+![0116](https://github.com/user-attachments/assets/62234897-f816-41bd-ac40-85e26fa4099c)<br>
+#Pause/Play - pinch sign<br>
+![0116(1)](https://github.com/user-attachments/assets/e1a1a116-1533-4786-8ac8-04885e7b63ee)<br>
+#Next - Index finger up, Previous - Like sign<br>
+![0116(2)](https://github.com/user-attachments/assets/56201b0f-856f-4f69-b9ef-5f55153754fb)<br>
 
+
+
+
+## 2 ) - Using neural network for classification problems
+
+[cifar10_log.txt](https://github.com/user-attachments/files/18204066/cifar10_log.txt)
 Confusion matrices: 
 ![Confusion Matrix - Logistic Regression](https://github.com/user-attachments/assets/f93ec3c3-bc32-4ff2-ab57-b1f6604c3db1)
 ![Confusion_Matrix_Animals](https://github.com/user-attachments/assets/316e4350-22d5-41f0-b9d3-8d168007e4a6)
@@ -265,10 +279,10 @@ Using two Datasets stars and ionosphere:
 #### Ionosphere 
 ![decision_tree_ionosphere](https://github.com/user-attachments/assets/adec7c71-d841-4d9d-83a9-9ac99a56d9db)
 
-### 2) MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
+### 3) MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
 
 
-### 3) FUZZY AUTOLAND SIMULATOR
+### 4) FUZZY AUTOLAND SIMULATOR
 Instructions in Polish 
 Na początku kodu dodaj opis problemu; wymień autorów rozwiązania; dodaj instrukcję przygotowania środowisk.
 
