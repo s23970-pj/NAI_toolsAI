@@ -1,4 +1,14 @@
-## 1) GESTURE CONTROLLED SPOTIFY
+## 1) Game Bot - Atari Carnival
+
+
+![0130(1)](https://github.com/user-attachments/assets/1732ffc3-ee5d-47c4-8b2f-ac50c3c5ee95)
+
+
+![0130(2)](https://github.com/user-attachments/assets/c20ec376-fcd7-4c3b-b08e-b08cd59e09ba)
+
+
+
+## 2) GESTURE CONTROLLED SPOTIFY
 using Computer vision
 <img width="1273" alt="Pasted image 20250111102725" src="https://github.com/user-attachments/assets/4283099d-6161-49c9-937c-baf39fcf367b" />
 #Mute gesture open hand horizontally<br>
@@ -11,7 +21,7 @@ using Computer vision
 
 
 
-## 2 ) - Using neural network for classification problems
+## 3) - Using neural network for classification problems
 
 [cifar10_log.txt](https://github.com/user-attachments/files/18204066/cifar10_log.txt)
 Confusion matrices: 
@@ -279,10 +289,10 @@ Using two Datasets stars and ionosphere:
 #### Ionosphere 
 ![decision_tree_ionosphere](https://github.com/user-attachments/assets/adec7c71-d841-4d9d-83a9-9ac99a56d9db)
 
-### 3) MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
+### 4) MATRIX GAME ALL INSTRUCTIONS IN THE FOLDER
 
 
-### 4) FUZZY AUTOLAND SIMULATOR
+### 5) FUZZY AUTOLAND SIMULATOR
 Instructions in Polish 
 Na początku kodu dodaj opis problemu; wymień autorów rozwiązania; dodaj instrukcję przygotowania środowisk.
 
