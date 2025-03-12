@@ -2,7 +2,7 @@
 
 Na początku kodu dodaj opis problemu; wymień autorów rozwiązania; dodaj instrukcję przygotowania środowisk.
 
-AUTORZY: ADRIAN GOIK, ŁUKASZ SOLDATKE
+AUTOR: ADRIAN GOIK
 OPIS PROBLEMU: Symulator automatycznego lądowania 2D przy użyciu logiki rozmytej (fuzzy logic) implementujący zmiany
 w czasie rzeczywistym bazujące na wysokości, Ground Speed (prędkości postępowej względem terenu) oraz odległości
 strefy przyziemienia.

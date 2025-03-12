@@ -1,6 +1,6 @@
 '''
 Problem: Trening i testowanie agenta Reinforcement Learning w środowisku Carnival-v5 z Wizualizacją postępu
-Autor: Adrian Goik, Łukasz Soldatke
+Autor: Adrian Goik
 Opis: Skrypt wykorzystuje algorytm PPO (Proximal Policy Optimization) do nauki gry w Carnival-v5
 Przygotowanie środowiska:
 zainstaluj poleceniem pip install [nazwa pakietu]

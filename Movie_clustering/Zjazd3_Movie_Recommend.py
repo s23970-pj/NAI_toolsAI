@@ -1,5 +1,5 @@
 '''
-Autorzy: Adrian Goik, Łukasz Soldatke
+Autor: Adrian Goik
 Opis problemu: Silnik do rekomendacji filmów, dla użytkowników z listy bazując na ich
 preferencjach.
 

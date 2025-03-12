@@ -2,7 +2,7 @@ from random import randint
 from easyAI import TwoPlayerGame, Human_Player, AI_Player, Negamax
 
 """
-Autorzy: Adrian Goik, Łukasz Soldatke
+Autor: Adrian Goik
 
 Zasady: Gra turowa o sumie zerowej polegająca na wyświetleniu planszy w postaci macierzy NxN,
 której pola posiadają losowe wartości od -10 do 10. Wartości z wybranych pól są dodawane do punktów gracza

@@ -1,6 +1,6 @@
 """
 
-Autorzy: Adrian Goik, Łukasz Soldatke
+Autor: Adrian Goik
 
 Problem: Wykorzystanie sieci neuronowych do klasyfikacji danych w różnych problemach.
 

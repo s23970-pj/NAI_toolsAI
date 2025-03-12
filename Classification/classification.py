@@ -1,5 +1,5 @@
 '''
-Autorzy: Łukasz Soldatke, Adrian Goik
+Autor: Adrian Goik
 Cel: Klasyfikacja dwóch różnych zbiorów danych za pomocą Drzewa Decyzyjnego oraz SVM.
 Analizujemy wyniki klasyfikacji, wizualizujemy dane oraz oceniamy jakość klasyfikatorów na podstawie metryk takich jak
 dokładność, precyzja, czułość i F1-score.
